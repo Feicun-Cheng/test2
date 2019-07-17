@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="test">
+  
+  <insert id="insertUser2" useGeneratedKeys="true" keyProperty="id" parameterType="pojo.User">
+  	insert into users(id,name,pwd) values(#{id},#{name},#{pwd})
+  </insert>
+  
+  <insert id="insertUser" parameterType="pojo.User">
+  	<selectKey keyProperty="id" resultType="int" order="AFTER">
+  		select last_insert_id()
+  	</selectKey>
+  	insert into users(id,name,pwd) values(#{id},#{name},#{pwd})
+  </insert>
+  
+  <select id="selectUser" parameterType="int" resultType="pojo.User">
+  	select * from users where id=#{id}
+  </select>
+  
+  <delete id="delUser" parameterType="int">
+  	delete from users where id=#{id}
+  </delete>
+  
+  <select id="selectName" parameterType="string" resultType="pojo.User">
+  	select * from users where name like '%${value}%'
+  </select>
+  
+  <update id="updateUser" parameterType="pojo.User">
+  	update users set name=#{name} where id=#{id}
+  </update>
+</mapper>
